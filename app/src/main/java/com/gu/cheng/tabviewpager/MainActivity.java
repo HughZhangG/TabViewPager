@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     LayoutInflater mLayoutInflater;
 
-    @BindView(R.id.id_gc_tab_layout)
+//    @BindView(R.id.id_gc_tab_layout)
     TabLayout mTabLayout;
 
-    @BindView(R.id.id_gc_view_pager)
+//    @BindView(R.id.id_gc_view_pager)
     ViewPager mViewPager;
 
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
+//        unbinder = ButterKnife.bind(this);
 
         findViews();
         initList();
@@ -77,10 +76,15 @@ public class MainActivity extends AppCompatActivity {
         //Bind the adapter with the mViewPager as well as mTablayout
 
 //        CustomPagerAdapter myAdapter = new CustomPagerAdapter(mViewList, mTabList);
-        SimpleFragmentAdapter myAdapter = new SimpleFragmentAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(myAdapter);
 
-        myAdapter.refreshData(mTabList);
+
+        List<Fragment> fragments = new ArrayList<Fragment>();
+        fragments.add(SwipeFragment.newInstance(0));
+        fragments.add(PageFragment.newInstance(1));
+        fragments.add(PageFragment.newInstance(2));
+        SimpleFragmentAdapter myAdapter = new SimpleFragmentAdapter(getSupportFragmentManager(),mTabList,fragments);
+        mViewPager.setAdapter(myAdapter);
+//        myAdapter.refreshData();
 
         mTabLayout.setupWithViewPager(mViewPager);
 //        mTabLayout.setTabsFromPagerAdapter(myAdapter);
@@ -92,12 +96,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+        mTabLayout = (TabLayout) findViewById(R.id.id_gc_tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.id_gc_view_pager);
         mLayoutInflater = LayoutInflater.from(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 }

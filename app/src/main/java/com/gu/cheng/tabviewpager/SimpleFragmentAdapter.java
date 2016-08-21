@@ -12,20 +12,32 @@ import java.util.List;
  */
 public class SimpleFragmentAdapter extends FragmentPagerAdapter {
 
-    private List<String> mTitles = new ArrayList<String>();
+    private List<String> mTitles;
+    private List<Fragment> mFragments;
 
     public SimpleFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
+    public SimpleFragmentAdapter(FragmentManager supportFragmentManager, ArrayList<String> mTabList,
+                                 List<Fragment> fragments) {
+        super(supportFragmentManager);
+        this.mTitles = mTabList;
+        mFragments = fragments;
+    }
+
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position);
+//        if (position == 0){
+//            return SwipeFragment.newInstance(position);
+//        }
+//        return PageFragment.newInstance(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return mTitles.size();
+        return mFragments == null ? 0 : mFragments.size();
     }
 
     @Override
@@ -33,7 +45,8 @@ public class SimpleFragmentAdapter extends FragmentPagerAdapter {
         return mTitles.get(position);
     }
 
-    public void refreshData(List<String> dataList){
+    public void refreshData(List<String> dataList,List<Fragment> fragments){
+        mFragments = fragments;
         mTitles.clear();
         mTitles.addAll(dataList);
         notifyDataSetChanged();

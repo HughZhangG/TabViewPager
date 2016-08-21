@@ -17,9 +17,18 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
 
     private List<String> mDatas;
 
+    public MenuAdapter(List<String> mDataList) {
+        this.mDatas = mDataList;
+    }
+
     public void setData(List<String> list){
          mDatas = list;
         notifyDataSetChanged();
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -35,6 +44,7 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
     @Override
     public void onBindViewHolder(MenuHolder holder, int position) {
         holder.setData(mDatas.get(position));
+        holder.setOnItemClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -42,13 +52,25 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
         return mDatas == null ? 0 : mDatas.size();
     }
 
-    static class MenuHolder extends RecyclerView.ViewHolder {
+    static class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private  TextView mText;
+        OnItemClickListener mOnItemClickListener;
 
         public MenuHolder(View itemView) {
             super(itemView);
             this.mText = (TextView) itemView.findViewById(R.id.id_gc_item_tv);
         }
+        public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+            this.mOnItemClickListener = onItemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(getAdapterPosition());
+            }
+        }
+
 
         public void setData(String data) {
             this.mText.setText(data);

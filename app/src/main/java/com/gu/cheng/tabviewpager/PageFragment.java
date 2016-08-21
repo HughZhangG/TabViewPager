@@ -22,8 +22,6 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class PageFragment extends Fragment {
@@ -32,10 +30,10 @@ public class PageFragment extends Fragment {
     private int mPage;
     private Unbinder unbinder;
 
-    @BindView(R.id.id_gc_swipe_recycler)
+//    @BindView(R.id.id_gc_swipe_recycler)
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
 
-    @BindView(R.id.id_gc_x_recycler)
+//    @BindView(R.id.id_gc_x_recycler)
     XRecyclerView mXRecyclerView;
     private List<String> mDataList;
     private Context mContext;
@@ -73,7 +71,7 @@ public class PageFragment extends Fragment {
 //        TextView textView = (TextView) view;
 //        textView.setText("Fragment #" + mPage);
 
-        unbinder = ButterKnife.bind(view);
+//        unbinder = ButterKnife.bind(view);
 
         initData();
 
@@ -95,13 +93,16 @@ public class PageFragment extends Fragment {
 
             // 设置菜单创建器。
             mSwipeMenuRecyclerView.setSwipeMenuCreator(swipeMenuCreator);
-// 设置菜单Item点击监听。
+            // 设置菜单Item点击监听。
             mSwipeMenuRecyclerView.setSwipeMenuItemClickListener(menuItemClickListener);
 
-            mMenuAdapter = new MenuAdapter();
-            mSwipeMenuRecyclerView.setAdapter(mMenuAdapter);
+            mSwipeMenuRecyclerView.openLeftMenu(0);
+            mSwipeMenuRecyclerView.openRightMenu(0);
 
-            mMenuAdapter.setData(mDataList);
+
+            mMenuAdapter = new MenuAdapter(mDataList);
+            mSwipeMenuRecyclerView.setAdapter(mMenuAdapter);
+//            mMenuAdapter.setData(mDataList);
         }else if (mXRecyclerView != null){
             mXRecyclerView.setLoadingMoreEnabled(true);
             mXRecyclerView.setPullRefreshEnabled(true);
@@ -125,12 +126,14 @@ public class PageFragment extends Fragment {
         @Override
         public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
 
-//            SwipeMenuItem addItem = new SwipeMenuItem(mContext)
+            int size = getResources().getDimensionPixelSize(R.dimen.menu_item_size);
+            SwipeMenuItem addItem = new SwipeMenuItem(mContext)
 //                    .setBackgroundDrawable(R.drawable.selector_green)// 点击的背景。
 //                    .setImage(R.mipmap.ic_action_add) // 图标。
-//                    .setWidth(80) // 宽度。
-//                    .setHeight(80); // 高度。
-//            swipeLeftMenu.addMenuItem(addItem); // 添加一个按钮到左侧菜单。
+                    .setText("删除") // 文字。
+                    .setWidth(80) // 宽度。
+                    .setHeight(80); // 高度。
+            swipeLeftMenu.addMenuItem(addItem); // 添加一个按钮到左侧菜单。
 
             SwipeMenuItem deleteItem = new SwipeMenuItem(mContext)
 //                    .setBackgroundDrawable(R.drawable.selector_red)
@@ -139,8 +142,8 @@ public class PageFragment extends Fragment {
                     .setText("删除") // 文字。
                     .setTextColor(Color.WHITE) // 文字颜色。
                     .setTextSize(16) // 文字大小。
-                    .setWidth(80)
-                    .setHeight(80);
+                    .setWidth(size)
+                    .setHeight(size);
             swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。
         }
     };
@@ -188,7 +191,7 @@ public class PageFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
  
 }
