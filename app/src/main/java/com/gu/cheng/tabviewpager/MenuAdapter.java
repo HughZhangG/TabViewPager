@@ -58,6 +58,10 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
 
         public MenuHolder(View itemView) {
             super(itemView);
+            /**
+             * 必须设置事件，才能解决与ViewPager的事件冲突
+             */
+            itemView.setOnClickListener(this);
             this.mText = (TextView) itemView.findViewById(R.id.id_gc_item_tv);
         }
         public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
