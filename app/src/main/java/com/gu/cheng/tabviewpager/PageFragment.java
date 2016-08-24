@@ -21,6 +21,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.Unbinder;
 
@@ -35,7 +36,7 @@ public class PageFragment extends Fragment {
 
 //    @BindView(R.id.id_gc_x_recycler)
     XRecyclerView mXRecyclerView;
-    private List<String> mDataList;
+    private List<Object> mDataList;
     private Context mContext;
     private MenuAdapter mMenuAdapter;
 
@@ -181,7 +182,7 @@ public class PageFragment extends Fragment {
 
     private void initData() {
 
-        mDataList = new ArrayList<String>();
+        mDataList = new ArrayList<Object>();
         for (int i = 0; i < 50; i++) {
             mDataList.add("Fragment #" + mPage +"---"+i);
         }

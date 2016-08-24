@@ -13,7 +13,7 @@ import java.util.List;
  * Created by gc on 2016/8/18.
  */
 public class XRecyclerAdapter extends RecyclerView.Adapter<XRecyclerAdapter.ViewHolder> {
-    private List<String> mDataList;
+    private List<Object> mDataList;
     private Context mContext;
 
 
@@ -21,7 +21,7 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<XRecyclerAdapter.View
         this.mContext = mContext;
     }
 
-    public void setData(List<String> list){
+    public void setData(List<Object> list){
         mDataList = list;
         notifyDataSetChanged();
     }
@@ -36,7 +36,7 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<XRecyclerAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(mDataList.get(position));
+        holder.setData(mDataList.get(position).toString());
     }
 
     @Override

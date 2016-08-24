@@ -32,7 +32,7 @@ public class SwipeFragment extends Fragment {
 
 //    @BindView(R.id.id_gc_swipe_recycler)
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
-    private List<String> mDataList;
+    private List<Object> mDataList;
     private Context mContext;
     private MenuAdapter mMenuAdapter;
 
@@ -115,7 +115,8 @@ public class SwipeFragment extends Fragment {
             SwipeMenuItem addItem = new SwipeMenuItem(mContext)
 //                    .setBackgroundDrawable(R.drawable.selector_green)// 点击的背景。
 //                    .setImage(R.mipmap.ic_action_add) // 图标。
-                    .setText("删除") // 文字。
+                    .setBackgroundColor(Color.RED)
+                    .setText("添加") // 文字。
                     .setWidth(size) // 宽度。
                     .setHeight(size); // 高度。
             swipeLeftMenu.addMenuItem(addItem); // 添加一个按钮到左侧菜单。
@@ -159,14 +160,14 @@ public class SwipeFragment extends Fragment {
             // TODO 删除Item后调用Adapter.notifyDataSetChanged()，下面是事例代码：
             if (menuPosition == 0) {// 删除按钮被点击。
                 mDataList.remove(adapterPosition);
+//                mMenuAdapter.remove(adapterPosition);
                 mMenuAdapter.notifyDataSetChanged();
             }
         }
     };
 
     private void initData() {
-
-        mDataList = new ArrayList<String>();
+        mDataList = new ArrayList<Object>();
         for (int i = 0; i < 50; i++) {
             mDataList.add("Fragment #" + mPage +"---"+i);
         }

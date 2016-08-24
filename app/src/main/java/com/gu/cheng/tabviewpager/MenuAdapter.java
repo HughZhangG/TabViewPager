@@ -15,14 +15,14 @@ import java.util.List;
  */
 public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
 
-    private List<String> mDatas;
+    private List<Object> mDatas;
 
-    public MenuAdapter(List<String> mDataList) {
-        this.mDatas = mDataList;
+    public MenuAdapter(List<Object> mDataList) {
+        mDatas = mDataList;
     }
 
-    public void setData(List<String> list){
-         mDatas = list;
+    public void setData(List<Object> list){
+        mDatas = list;
         notifyDataSetChanged();
     }
 
@@ -43,7 +43,8 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
 
     @Override
     public void onBindViewHolder(MenuHolder holder, int position) {
-        holder.setData(mDatas.get(position));
+        super.onBindViewHolder(holder,position);
+        holder.setData(mDatas.get(position).toString());
         holder.setOnItemClickListener(mOnItemClickListener);
     }
 
@@ -51,6 +52,8 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.MenuHolder> {
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
     }
+
+
 
     static class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private  TextView mText;
